@@ -107,10 +107,10 @@ export default function ResumePage({ onBack }: { onBack?: () => void }) {
                   <span className="text-white ml-1">SHUO</span>
                 </h1>
                 <p className="text-[#EBEBF5]/70 text-[15px] font-medium leading-relaxed">
-                  景观 / 空间方案设计师
+                  AI设计师
                 </p>
                 <p className="text-[#F26522]/80 text-[13px] mt-1 font-medium">
-                  AIGC 设计（环境艺术方向）
+                  AI设计师
                 </p>
               </div>
             </div>

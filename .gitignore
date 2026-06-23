@@ -1,21 +1,10 @@
-# Dependencies
 node_modules/
-
-# Build output
 dist/
-
-# WorkBuddy
 .workbuddy/
-
-# Misc
+ys3/
+ys4/
 *.log
 .DS_Store
 Thumbs.db
-
-# Temp files
 nul
 extract_pptx.py
-
-# Sub-folder repos
-ys3/
-ys4/
