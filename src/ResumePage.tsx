@@ -109,9 +109,6 @@ export default function ResumePage({ onBack }: { onBack?: () => void }) {
                 <p className="text-[#EBEBF5]/70 text-[15px] font-medium leading-relaxed">
                   AI设计师
                 </p>
-                <p className="text-[#F26522]/80 text-[13px] mt-1 font-medium">
-                  AI设计师
-                </p>
               </div>
             </div>
 
