@@ -170,6 +170,59 @@ html, body {
     0 0 48px rgba(242,101,34,0.10);
 }
 
+/* ── Scroll-down indicator: breathing animation ── */
+@keyframes scroll-breath {
+  0%, 100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.75;
+    transform: translateY(6px);
+  }
+}
+
+.scroll-indicator {
+  animation: scroll-breath 2.4s ease-in-out infinite;
+}
+
+.scroll-indicator__text {
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.scroll-indicator__arrow {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: -4px;
+}
+
+.scroll-indicator__chevron {
+  width: 28px;
+  height: 28px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.scroll-indicator__chevron:nth-child(1) {
+  opacity: 0.6;
+}
+
+.scroll-indicator__chevron:nth-child(2) {
+  opacity: 0.35;
+  margin-top: -9px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator {
+    animation: none;
+  }
+}
+
 /* Bento tag pill */
 .bento-tag {
   font-size: 11px;

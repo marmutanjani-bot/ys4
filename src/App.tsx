@@ -1,21 +1,14 @@
 ﻿import { useState, useEffect } from 'react'
-import { ArrowRight, Clock, Menu, X, ArrowLeft, ChevronLeft, ChevronRight, Info, Images } from 'lucide-react'
+import { ArrowRight, Menu, X, ArrowLeft, ChevronLeft, ChevronRight, Info, Images } from 'lucide-react'
 import { Shader, Swirl, ChromaFlow, FlutedGlass, FilmGrain } from 'shaders/react'
 import DomeGallery from './DomeGallery'
 import ArchAIProjectPage from './ArchAIProjectPage'
 import PortfolioViewerPage from './PortfolioViewerPage'
+import ResumePage from './ResumePage'
 
 /* ─────────────────────────────────────────────
    SVG ASSETS
 ───────────────────────────────────────────── */
-
-function PartnerSVG() {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
-      <path d="m19.6 66.5 19.7-11 .3-1-.3-.5h-1l-3.3-.2-11.2-.3L14 53l-9.5-.5-2.4-.5L0 49l.2-1.5 2-1.3 2.9.2 6.3.5 9.5.6 6.9.4L38 49.1h1.6l.2-.7-.5-.4-.4-.4L29 41l-10.6-7-5.6-4.1-3-2-1.5-2-.6-4.2 2.7-3 3.7.3.9.2 3.7 2.9 8 6.1L37 36l1.5 1.2.6-.4.1-.3-.7-1.1L33 25l-6-10.4-2.7-4.3-.7-2.6c-.3-1-.4-2-.4-3l3-4.2L28 0l4.2.6L33.8 2l2.6 6 4.1 9.3L47 29.9l2 3.8 1 3.4.3 1h.7v-.5l.5-7.2 1-8.7 1-11.2.3-3.2 1.6-3.8 3-2L61 2.6l2 2.9-.3 1.8-1.1 7.7L59 27.1l-1.5 8.2h.9l1-1.1 4.1-5.4 6.9-8.6 3-3.5L77 13l2.3-1.8h4.3l3.1 4.7-1.4 4.9-4.4 5.6-3.7 4.7-5.3 7.1-3.2 5.7.3.4h.7l12-2.6 6.4-1.1 7.6-1.3 3.5 1.6.4 1.6-1.4 3.4-8.2 2-9.6 2-14.3 3.3-.2.1.2.3 6.4.6 2.8.2h6.8l12.6 1 3.3 2 1.9 2.7-.3 2-5.1 2.6-6.8-1.6-16-3.8-5.4-1.3h-.8v.4l4.6 4.5 8.3 7.5L89 80.1l.5 2.4-1.3 2-1.4-.2-9.2-7-3.6-3-8-6.8h-.5v.7l1.8 2.7 9.8 14.7.5 4.5-.7 1.4-2.6 1-2.7-.6-5.8-8-6-9-4.7-8.2-.5.4-2.9 30.2-1.3 1.5-3 1.2-2.5-2-1.4-3 1.4-6.2 1.6-8 1.3-6.4 1.2-7.9.7-2.6v-.2H49L43 72l-9 12.3-7.2 7.6-1.7.7-3-1.5.3-2.8L24 86l10-12.8 6-7.9 4-4.6-.1-.5h-.3L17.2 77.4l-4.7.6-2-2 .2-3 1-1 8-5.5Z" />
-    </svg>
-  )
-}
 
 function LinkIcon() {
   return (
@@ -24,30 +17,6 @@ function LinkIcon() {
       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
     </svg>
   )
-}
-
-/* ─────────────────────────────────────────────
-   HOOKS
-───────────────────────────────────────────── */
-
-function useLondonTime() {
-  const [time, setTime] = useState('')
-  useEffect(() => {
-    const update = () => {
-      setTime(
-        new Date().toLocaleTimeString('en-GB', {
-          timeZone: 'Europe/London',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        })
-      )
-    }
-    update()
-    const id = setInterval(update, 1000)
-    return () => clearInterval(id)
-  }, [])
-  return time
 }
 
 /* ─────────────────────────────────────────────
@@ -104,11 +73,8 @@ function OrangeButton({ text, large = false, noRoll = false, onClick }: { text: 
    SECTION 1: HERO
 ───────────────────────────────────────────── */
 
-const NAV_LINKS = ['Projects', 'Studio', 'Journal', 'Connect']
-
-function HeroSection({ onNavigate }: { onNavigate?: () => void }) {
+function HeroSection({ onNavigate, onShowResume }: { onNavigate?: () => void; onShowResume?: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const londonTime = useLondonTime()
 
   return (
     <section className="relative min-h-screen bg-[#0A0A0A] flex flex-col">
@@ -156,26 +122,12 @@ function HeroSection({ onNavigate }: { onNavigate?: () => void }) {
                 <span className="text-white font-bold tracking-tight text-[13px]">首页</span>
               </div>
               {/* Nav links (md+) */}
-              <div className="hidden md:flex items-center gap-6">
-                {NAV_LINKS.map(link => (
-                  <a key={link} href="#" className="text-[14px] text-[#EBEBF5]/80 hover:text-white transition-colors duration-300">
-                    {link}
-                  </a>
-                ))}
-              </div>
             </div>
 
             {/* Right (md+) */}
             <div className="hidden md:flex items-center gap-4 pr-0.5">
-              <span className="hidden lg:block text-[13px] text-[#EBEBF5]/50">
-                Taking on projects for Q1 2026
-              </span>
-              <div className="flex items-center gap-1.5">
-                <Clock size={14} className="text-[#EBEBF5]/50" />
-                <span className="text-[13px] text-[#EBEBF5]/50">{londonTime} in London</span>
-              </div>
               {/* 个人经历 button */}
-              <button className="group bg-[#F26522] hover:bg-[#e05a1a] flex items-center gap-2 text-white text-[13px] font-medium rounded-full pl-5 pr-2 py-2 transition-colors duration-300">
+              <button onClick={onShowResume} className="group bg-[#F26522] hover:bg-[#e05a1a] flex items-center gap-2 text-white text-[13px] font-medium rounded-full pl-5 pr-2 py-2 transition-colors duration-300">
                 <span className="text-roll-outer">
                   <span className="text-roll-inner">
                     <span>个人经历</span>
@@ -227,22 +179,19 @@ function HeroSection({ onNavigate }: { onNavigate?: () => void }) {
         {/* CTA row */}
         <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row items-start gap-4 sm:gap-5">
           <OrangeButton text="作品预览" large noRoll onClick={onNavigate} />
+        </div>
+      </div>
 
-          {/* Partner badge */}
-          <div
-            className="flex items-center gap-2.5 sm:gap-3 bg-[#1C1C1E] border border-white/10 px-3 sm:px-4 py-2 rounded-[4px] cursor-pointer transition-all duration-300"
-            style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0,0,0,0.5)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)' }}
-          >
-            <div className="w-5 h-5 sm:w-6 sm:h-6 text-[#F26522] flex-shrink-0">
-              <PartnerSVG />
-            </div>
-            <span className="text-[13px] sm:text-[14px] font-medium text-white">Certified Partner</span>
-            <span className="text-[10px] sm:text-[11px] bg-[#2C2C2E] text-[#EBEBF5]/70 px-1.5 sm:px-2 py-0.5 rounded font-medium">
-              Featured
-            </span>
-          </div>
+      {/* ── Scroll-down indicator ── */}
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 scroll-indicator flex flex-col items-center pointer-events-none">
+        <span className="scroll-indicator__text">下滑查看更多</span>
+        <div className="scroll-indicator__arrow">
+          <svg className="scroll-indicator__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+          <svg className="scroll-indicator__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
         </div>
       </div>
 
@@ -261,25 +210,13 @@ function HeroSection({ onNavigate }: { onNavigate?: () => void }) {
             transition: 'transform 500ms cubic-bezier(0.32, 0.72, 0, 1)',
           }}
         >
-          {/* Time badge */}
-          <div className="flex items-center gap-1.5 mb-8">
-            <Clock size={13} className="text-[#EBEBF5]/40" />
-            <span className="text-[13px] text-[#EBEBF5]/40">{londonTime} in London</span>
-          </div>
-          {/* Nav links */}
-          <nav className="flex flex-col gap-2 mb-8">
-            {NAV_LINKS.map(link => (
-              <a
-                key={link}
-                href="#"
-                className="text-[28px] sm:text-[32px] font-medium text-white hover:text-[#EBEBF5]/60 transition-colors duration-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link}
-              </a>
-            ))}
-          </nav>
-          <OrangeButton text="Start a project" />
+          {/* 个人经历 button */}
+          <button onClick={onShowResume} className="group bg-[#F26522] hover:bg-[#e05a1a] flex items-center gap-2 text-white text-[13px] font-medium rounded-full pl-5 pr-2 py-2 transition-colors duration-300 w-fit">
+            <span>个人经历</span>
+            <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 arrow-roll">
+              <ArrowRight size={14} className="text-[#F26522]" />
+            </div>
+          </button>
         </div>
       </div>
     </section>
@@ -314,7 +251,6 @@ function AboutSection({ onCard1Click, onCard2Click, onCard3Click, onCard4Click }
           <h2 className="text-[clamp(1.75rem,5vw,3.5rem)] font-medium leading-[1.08] tracking-[-0.03em] text-white">
             AI 项目作品
           </h2>
-          <OrangeButton text="查看全部项目" />
         </div>
 
         {/* ── Bento Grid ── */}
@@ -324,9 +260,9 @@ function AboutSection({ onCard1Click, onCard2Click, onCard3Click, onCard4Click }
           <div className={`${cardCls} md:col-span-2`} onClick={onCard1Click}>
             <div className="p-5 sm:p-6 lg:p-7 flex flex-col h-full">
               <div className="flex flex-wrap gap-1.5 mb-4">
-                <span className="bento-tag">3D 交互</span>
-                <span className="bento-tag">Site of the Month</span>
-                <span className="bento-tag">2025</span>
+                <span className="bento-tag">服装生图</span>
+                <span className="bento-tag">生成式AI</span>
+                <span className="bento-tag">2026</span>
               </div>
               <div className="rounded-xl overflow-hidden mb-5" style={{ aspectRatio: '16/9' }}>
                 <img
@@ -336,9 +272,9 @@ function AboutSection({ onCard1Click, onCard2Click, onCard3Click, onCard4Click }
                 />
               </div>
               <div className="mt-auto">
-                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">Narrativ</h3>
+                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">AI服装替换/生成</h3>
                 <p className="text-[13px] text-[#EBEBF5]/50 leading-relaxed">
-                  Winner of Site of the Month 2025 — an interactive 3D showcase driving record engagement
+                  跳转网页中的卡片内容均为本人独立完成，内容主要为服装白底图替换实拍图，部分图片已经上线淘宝、天猫
                 </p>
               </div>
             </div>
@@ -359,9 +295,9 @@ function AboutSection({ onCard1Click, onCard2Click, onCard3Click, onCard4Click }
                 />
               </div>
               <div className="mt-auto">
-                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">Luminar</h3>
+                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">AI物料生成</h3>
                 <p className="text-[13px] text-[#EBEBF5]/50 leading-relaxed">
-                  Transforming a dated platform into a conversion-focused brand experience
+                  跳转网页中的卡片内容均为淘宝详情页或社媒所需物料图
                 </p>
               </div>
             </div>
@@ -378,9 +314,9 @@ function AboutSection({ onCard1Click, onCard2Click, onCard3Click, onCard4Click }
                 <img src="/cover-axion.jpg" alt="一月活动预告" className="w-full h-full object-cover" />
               </div>
               <div className="mt-auto">
-                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">Axion Studio</h3>
+                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">社媒海报</h3>
                 <p className="text-[13px] text-[#EBEBF5]/50 leading-relaxed">
-                  Designing a design tool for designers
+                  社媒所需海报模板均为AI制作，可复用
                 </p>
               </div>
             </div>
@@ -398,9 +334,9 @@ function AboutSection({ onCard1Click, onCard2Click, onCard3Click, onCard4Click }
                 <img src="/cover-card4.jpg" alt="AI赋能产品开发" className="w-full h-full object-cover" />
               </div>
               <div className="mt-auto">
-                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">Brand Identity</h3>
+                <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">Agent搭建及跨部门提效</h3>
                 <p className="text-[13px] text-[#EBEBF5]/50 leading-relaxed">
-                  从零构建数字品牌体验，策略驱动的创意设计让品牌走向国际舞台
+                  目前已经有生图Agent搭建的经验，并且进行了跨部门讲解
                 </p>
               </div>
             </div>
@@ -421,8 +357,8 @@ function NarrativCard({ onClick }: { onClick?: () => void }) {
     <div className={cardCls} onClick={onClick}>
       <div className="p-5 sm:p-6 lg:p-7 flex flex-col h-full">
         <div className="flex flex-wrap gap-1.5 mb-4">
-          <span className="bento-tag">3D 交互</span>
-          <span className="bento-tag">Site of the Month</span>
+          <span className="bento-tag">建筑设计</span>
+          <span className="bento-tag">AI赋能</span>
           <span className="bento-tag">2025</span>
         </div>
         <div className="rounded-xl overflow-hidden mb-5" style={{ aspectRatio: '16/9' }}>
@@ -433,9 +369,9 @@ function NarrativCard({ onClick }: { onClick?: () => void }) {
           />
         </div>
         <div className="mt-auto">
-          <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">Narrativ</h3>
+          <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">建筑设计AI赋能</h3>
           <p className="text-[13px] text-[#EBEBF5]/50 leading-relaxed">
-            Winner of Site of the Month 2025 — an interactive 3D showcase driving record engagement
+            此部分均为第二段实习过程中用AI帮同事提效的产物
           </p>
         </div>
       </div>
@@ -453,7 +389,7 @@ function LuminarCard({ onClick }: { onClick?: () => void }) {
         </div>
         <div className="rounded-xl overflow-hidden mb-5" style={{ aspectRatio: '4/3' }}>
           <img
-            src="/portfolio-2025/page-01.jpg"
+            src="/thesis-cover.png"
             alt="杨烁作品集"
             className="w-full h-full object-cover"
           />
@@ -461,7 +397,7 @@ function LuminarCard({ onClick }: { onClick?: () => void }) {
         <div className="mt-auto">
           <h3 className="text-[17px] sm:text-[19px] font-semibold text-white mb-1.5">杨烁 作品集</h3>
           <p className="text-[13px] text-[#EBEBF5]/50 leading-relaxed">
-            2025 秋季作品集合集，涵盖品牌设计、视觉传达与数字创意项目
+            此部分均为校园课程/项目，也实现了AI全覆盖
           </p>
         </div>
       </div>
@@ -481,7 +417,7 @@ function CaseStudiesSection({ onCard1Click, onCard2Click }: { onCard1Click?: () 
 
         {/* Heading */}
         <h2 className="text-[clamp(1.75rem,7vw,4.2rem)] sm:text-[clamp(2.5rem,5vw,4.2rem)] font-medium leading-[1.08] tracking-[-0.03em] text-white mb-10 sm:mb-14 lg:mb-16 px-5 sm:px-8 lg:px-12">
-          Our projects
+          建筑专业AI赋能
         </h2>
 
         {/* Cards grid */}
@@ -545,7 +481,7 @@ const DETAIL_ITEMS = [
   },
   {
     id: 5,
-    caption: '生图项目·软壳冲锋裤实拍图',
+    caption: '内裤外包装物料生成',
     tall: false,
     title: 'Logo 设计',
     desc: '',
@@ -636,7 +572,7 @@ function ProjectDetailPage({ onBack }: { onBack: () => void }) {
           </button>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#F26522]" />
-            <span className="text-white text-[14px] font-semibold">Narrativ</span>
+            <span className="text-white text-[14px] font-semibold">AI服装替换/生成</span>
             <span className="text-[#EBEBF5]/40 text-[13px]">· 生图项目 / 工作成果展示</span>
           </div>
           <div className="w-16" />{/* placeholder to center title */}
@@ -742,8 +678,10 @@ function DetailModal({
       {/* 弹窗内容 — 左图右文 */}
       <div className="flex w-[92%] max-w-[1100px] h-[88vh] max-h-[800px] rounded-2xl overflow-hidden bg-[#111] shadow-2xl ring-1 ring-white/15" style={{ boxShadow: '0 0 40px rgba(255,255,255,0.06), 0 25px 50px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08)' }}>
 
-        {/* ===== 左侧：图片区域 (3:4 比例) ===== */}
-        <div className="relative flex-shrink-0 w-full md:w-[55%] lg:w-[58%] bg-black flex items-center justify-center overflow-hidden group/img">
+        {/* ===== 左侧：图片+标题区域 ===== */}
+        <div className="relative flex-shrink-0 w-full md:w-[55%] lg:w-[58%] flex flex-col bg-[#111]">
+          {/* 图片容器 */}
+          <div className="relative flex-1 bg-black flex items-center justify-center overflow-hidden group/img">
           {images.length > 0 && images[imgIndex] ? (
             <img
               src={images[imgIndex]}
@@ -796,6 +734,14 @@ function DetailModal({
           )}
         </div>
 
+          {/* 图片正下方标题（跟随图片切换） */}
+          {item.imgLabels && item.imgLabels[imgIndex] && (
+            <div className="flex-shrink-0 py-4 px-6 text-center bg-[#111] border-t border-white/[0.04]">
+              <span className="text-[24px] sm:text-[28px] font-bold text-[#F26522] leading-tight">{item.imgLabels[imgIndex]}</span>
+            </div>
+          )}
+        </div>
+
         {/* ===== 右侧：文字说明区域 ===== */}
         <div className="flex-1 flex flex-col overflow-y-auto border-l border-white/[0.06]">
           {/* 头部信息 */}
@@ -844,14 +790,14 @@ function DetailModal({
                   <span className="text-[13px] text-white/60">白底细节图</span>
                 </div>
               </div>
-              {/* 当前图片类别 */}
-              {item.imgLabels && item.imgLabels[imgIndex] && (
-                <div className="mt-3 pt-2 border-t border-white/[0.05]">
-                  <span className="text-[11px] text-white/35">当前查看：</span>
-                  <span className="text-[12px] font-medium text-[#F26522]">{item.imgLabels[imgIndex]}</span>
-                </div>
-              )}
-            </div>
+        </div>
+
+        {/* ===== 图片正下方标题（跟随图片切换） ===== */}
+        {item.imgLabels && item.imgLabels[imgIndex] && (
+          <div className="flex-shrink-0 bg-[#111] py-4 px-6 text-center border-b border-white/[0.06] md:hidden">
+            <span className="text-[24px] font-bold text-[#F26522] leading-tight">{item.imgLabels[imgIndex]}</span>
+          </div>
+        )}
 
             {/* 描述 */}
             <p className="text-[14px] sm:text-[15px] text-white/55 leading-relaxed mb-4">{item.desc}</p>
@@ -967,29 +913,29 @@ const LUMINAR_CARDS = [
     id: 1,
     tags: ['生图项目', '软壳冲锋裤'],
     image: '/luminar-cover.jpg',
-    title: '生图项目 · 软壳冲锋裤实拍图',
-    desc: 'AI生成的软壳冲锋裤户外场景实拍图，展示产品在不同地形下的穿着效果与细节表现。',
+    title: '内裤外包装物料生成',
+    desc: '',
   },
   {
     id: 2,
     tags: ['生图项目', '产品实拍'],
     image: '/material2/cover2.png',
-    title: '生图项目 · 产品实拍图',
-    desc: 'AI生成的产品实拍图，展示产品在不同场景下的呈现效果与细节表现。',
+    title: '手包物料生成',
+    desc: '',
   },
   {
     id: 3,
     tags: ['AI图', '场景生成'],
     image: '/material3/cover3.png',
-    title: 'AI生成图 · 场景拓展',
-    desc: '基于原片参考，AI生成的多场景拓展图，保持产品细节一致性同时丰富场景变化。',
+    title: '面料围观细节图生成',
+    desc: '',
   },
   {
     id: 4,
     tags: ['白底图', '产品细节'],
     image: '/material4/7.png',
-    title: '白底细节图 · 产品规范',
-    desc: '标准白底产品细节图，用于电商平台主图及规格参数展示，确保产品细节清晰可见。',
+    title: '直播预告图',
+    desc: '',
   },
 ]
 
@@ -1053,7 +999,7 @@ function LuminarProjectPage({ onBack }: { onBack: () => void }) {
           </button>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#F26522]" />
-            <span className="text-white text-[14px] font-semibold">Luminar</span>
+            <span className="text-white text-[14px] font-semibold">AI物料生成</span>
             <span className="text-[#EBEBF5]/40 text-[13px]">· 生图项目 / 工作成果展示</span>
           </div>
           <div className="w-16" />
@@ -1083,12 +1029,6 @@ function LuminarProjectPage({ onBack }: { onBack: () => void }) {
               className="relative bg-[#111111] border border-white/[0.07] rounded-2xl lg:rounded-3xl overflow-hidden cursor-pointer group bento-card"
             >
               <div className="p-5 sm:p-6 lg:p-7 flex flex-col h-full">
-                {/* 标签 */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {card.tags.map(tag => (
-                    <span key={tag} className="bento-tag">{tag}</span>
-                  ))}
-                </div>
                 {/* 图片 */}
                 <div className="rounded-xl overflow-hidden mb-5" style={{ aspectRatio: '4/3' }}>
                   <img
@@ -1784,13 +1724,6 @@ function SocialMediaPage({ onBack }: { onBack: () => void }) {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-[11px] font-mono text-[#F26522]/70 tracking-wider">{group.subtitle}</span>
-                  <div className="flex gap-1.5">
-                    {group.tags.map(tag => (
-                      <span key={tag} className="px-2 py-0.5 rounded text-[10px] text-[#EBEBF5]/50 bg-white/[0.05]">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
                 </div>
                 <h2 className="text-[clamp(1.25rem,3vw,1.75rem)] font-bold text-white tracking-tight">
                   {group.title}
@@ -2418,7 +2351,7 @@ function AIProductPage({ onBack }: { onBack: () => void }) {
    ───────────────────────────────────────────── */
 
 export default function App() {
-  const [page, setPage] = useState<'home' | 'gallery' | 'project-narrativ' | 'project-luminar' | 'project-social-media' | 'project-ai-product' | 'project-arch-ai' | 'project-portfolio'>('home')
+  const [page, setPage] = useState<'home' | 'gallery' | 'project-narrativ' | 'project-luminar' | 'project-social-media' | 'project-ai-product' | 'project-arch-ai' | 'project-portfolio' | 'resume'>('home')
 
   // 切换页面时自动滚动到顶部
   useEffect(() => {
@@ -2471,9 +2404,13 @@ export default function App() {
     return <PortfolioViewerPage onBack={() => setPage('home')} />
   }
 
+  if (page === 'resume') {
+    return <ResumePage onBack={() => setPage('home')} />
+  }
+
   return (
     <div>
-      <HeroSection onNavigate={() => setPage('gallery')} />
+      <HeroSection onNavigate={() => setPage('gallery')} onShowResume={() => setPage('resume')} />
       <AboutSection onCard1Click={() => setPage('project-narrativ')} onCard2Click={() => setPage('project-luminar')} onCard3Click={() => setPage('project-social-media')} onCard4Click={() => setPage('project-ai-product')} />
       <CaseStudiesSection onCard1Click={() => setPage('project-arch-ai')} onCard2Click={() => setPage('project-portfolio')} />
     </div>
