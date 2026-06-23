@@ -1,11 +1,13 @@
-declare module './DomeGallery' {
-  interface DomeGalleryProps {
-    grayscale?: boolean
-    fit?: number
-    overlayBlurColor?: string
-    openedImageWidth?: string
-    openedImageHeight?: string
-    [key: string]: any
-  }
-  export default function DomeGallery(props: DomeGalleryProps): JSX.Element
+import type { FC } from 'react'
+
+interface DomeGalleryProps {
+  grayscale?: boolean
+  fit?: number
+  overlayBlurColor?: string
+  openedImageWidth?: string
+  openedImageHeight?: string
+  [key: string]: any
 }
+
+declare const DomeGallery: FC<DomeGalleryProps>
+export default DomeGallery
